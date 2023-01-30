@@ -1,3 +1,4 @@
+# Coger los discos del script
 locals {
   disks  = jsondecode(file("${path.module}/../scripts/disks.json"))
 }
@@ -38,6 +39,7 @@ resource "google_compute_resource_policy" "snapshot_schedule" {
     }
 }
 
+# Agregar el schedule policy a cada disco de los recogidos con el script
 resource "google_compute_disk_resource_policy_attachment" "snapshot_schedule_attachment" {
   for_each  = { for disk in local.disks.disks : disk.name => disk }
   name      = google_compute_resource_policy.snapshot_schedule.name
