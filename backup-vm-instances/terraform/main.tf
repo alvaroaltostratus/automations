@@ -1,3 +1,7 @@
+locals {
+  disks  = jsondecode(file("${path.module}/../scripts/disks.json"))
+}
+
 terraform {
   required_providers {
     google = {
@@ -32,4 +36,11 @@ resource "google_compute_resource_policy" "snapshot_schedule" {
           guest_flush = true
         }
     }
+}
+
+resource "google_compute_disk_resource_policy_attachment" "snapshot_schedule_attachment" {
+  for_each  = { for disk in local.disks.disks : disk.name => disk }
+  name      = google_compute_resource_policy.snapshot_schedule.name
+  disk      = each.value.name
+  zone      = each.value.zone
 }

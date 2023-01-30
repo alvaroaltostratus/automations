@@ -1,10 +1,10 @@
 #! /bin/bash
 
-cd ./terraform/
-terraform init
-terraform apply --auto-approve
+cd ./scripts/
+python3.10 get-disks.py
 
 cd ..
 
-cd ./scripts/
-python3.10 schedule-apply.py
+cd ./terraform/
+terraform init
+terraform apply --auto-approve
