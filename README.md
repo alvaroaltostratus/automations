@@ -12,7 +12,7 @@
 2. Cambia el archivo `terraform.tfvars` y cambia el proyecto y la región
 3. Ejecuta `terraform init` y `terraform apply --auto-approve`
 4. Ve a la carpeta "antivirus/terraform-import"
-5. Ejecuta `terraformer import google -r instances -z <región> --projects <proyecto> -p "{service}"-C -O json`
+5. Ejecuta `terraformer import google -r instances -z <región> --projects <proyecto> -p "{service}" -C -O json`
 6. Ve a la carpeta "scripts"
 7. Ejecuta `python antivirus.py`
 ---
