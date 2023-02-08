@@ -16,10 +16,14 @@ if __name__ == "__main__":
     for zone, response in request:
         if response.disks:
             for disk in response.disks:
-                disks["disks"].append({
-                    "name": disk.name,
-                    "zone": zone.split("/")[-1],
-                })
+                if len(disk.resource_policies) <= 0:
+                    print(f" + {disk.name} va a ser modificado")
+                    disks["disks"].append({
+                        "name": disk.name,
+                        "zone": zone.split("/")[-1],
+                    })
+                else:
+                    print(f" - {disk.name} no va a ser modificado")
     
     # Guardo todos los discos en un archivo .json
     json.dump(disks, open("disks.json", "w"))

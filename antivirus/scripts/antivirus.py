@@ -4,7 +4,6 @@ from googleapiclient import discovery
 from oauth2client.client import GoogleCredentials
 
 if __name__ == '__main__':
-
     with open('../terraform-import/instances/resources.tf.json') as f:
         instances = json.loads(f.read())["resource"]["google_compute_instance"]
         credentials = GoogleCredentials.get_application_default()
@@ -23,7 +22,7 @@ if __name__ == '__main__':
                     "key":'startup-script',
                     "value": "hola"
                 }]
-            
+
             try:
                 response = service.instances().setMetadata(project=v["project"], zone=v["zone"], instance=v["name"], body=curr_metadata).execute()
                 print(f"Applied startup-script to {v['name']}")

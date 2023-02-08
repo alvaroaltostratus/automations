@@ -1,2 +1,2 @@
-project_id  = "sixth-aloe-371617"
-region      = "us-central1"
+project_id  = "ecoprensa-web"
+region      = "eu-west1"
