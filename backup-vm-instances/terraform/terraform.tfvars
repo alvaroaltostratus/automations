@@ -1,2 +1,2 @@
 project_id  = "ecoprensa-web"
-region      = "eu-west1"
+region      = "europe-west1"
