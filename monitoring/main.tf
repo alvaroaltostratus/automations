@@ -44,10 +44,17 @@ resource "google_service_account" "service_account_publisher" {
 resource "google_pubsub_topic_iam_member" "name" {
     project     = var.obm_project
     member      = "serviceAccount:${google_service_account.service_account_publisher.email}"
-    role        = "pubsub.publisher"
+    role        = "roles/pubsub.publisher"
     topic       = google_pubsub_topic.topic.name
 
     depends_on  = [
+        google_pubsub_topic.topic,
         google_service_account.service_account_publisher
     ]
+}
+
+module "alert_policies" {
+    source                  = "./modules/alert-policies"
+    client_project          = var.client_project
+    notification_channel    = google_monitoring_notification_channel.notification.id
 }
