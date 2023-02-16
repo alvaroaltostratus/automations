@@ -36,25 +36,30 @@ resource "google_monitoring_notification_channel" "notification" {
     ]
 }
 
-resource "google_service_account" "service_account_publisher" {
-    project     = var.client_project
-    account_id  = "monitorizacionobm-pubsub"
+resource "google_project_iam_binding" "role_binding" {
+    members = [ "serviceAccount:service-${var.client_project_number}@gcp-sa-monitoring-notification.iam.gserviceaccount.com" ]
+    project = var.client_project
+    role = "roles/pubsub.publisher"
 }
 
-resource "google_pubsub_topic_iam_member" "name" {
-    project     = var.obm_project
-    member      = "serviceAccount:${google_service_account.service_account_publisher.email}"
-    role        = "roles/pubsub.publisher"
-    topic       = google_pubsub_topic.topic.name
-
-    depends_on  = [
-        google_pubsub_topic.topic,
-        google_service_account.service_account_publisher
+resource "google_pubsub_topic_iam_member" "pubsub_member" {
+    project = var.obm_project
+    member  = "serviceAccount:service-${var.client_project_number}@gcp-sa-monitoring-notification.iam.gserviceaccount.com"
+    role    = "roles/pubsub.publisher"
+    topic   = google_pubsub_topic.topic.name
+    
+    depends_on = [
+      google_pubsub_topic.topic
     ]
 }
 
 module "alert_policies" {
     source                  = "./modules/alert-policies"
     client_project          = var.client_project
+    client_project_number   = var.client_project_number
     notification_channel    = google_monitoring_notification_channel.notification.id
+
+    depends_on = [
+      google_monitoring_notification_channel.notification
+    ]
 }

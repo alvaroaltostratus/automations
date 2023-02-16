@@ -26,7 +26,7 @@ resource "google_monitoring_alert_policy" "disk_policy" {
     display_name = "VM Instance - Disk utilization"
   }
 
-  notification_channels = [ "projects/${var.client_project}/notificationChannels/${var.notification_channel}" ]
+  notification_channels = [ var.notification_channel ]
 
   display_name          = "alerta-${var.client_project}-disk"
   enabled               = "true"
@@ -50,7 +50,7 @@ resource "google_monitoring_alert_policy" "cpu_policy" {
       comparison      = "COMPARISON_GT"
       duration        = "0s"
       filter          = "resource.type = \"gce_instance\" AND metric.type = \"agent.googleapis.com/cpu/utilization\" AND metric.labels.cpu_state != \"idle\""
-      threshold_value = "90"
+      threshold_value = "1"
 
       trigger {
         count   = "1"
@@ -61,7 +61,7 @@ resource "google_monitoring_alert_policy" "cpu_policy" {
     display_name = "VM Instance - CPU utilization"
   }
 
-  notification_channels = [ "projects/${var.client_project}/notificationChannels/${var.notification_channel}" ]
+  notification_channels = [ var.notification_channel ]
 
   display_name          = "alerta-${var.client_project}-cpu"
   enabled               = "true"
@@ -96,9 +96,10 @@ resource "google_monitoring_alert_policy" "memory_policy" {
     display_name = "VM Instance - Memory utilization"
   }
 
-  notification_channels = [ "projects/${var.client_project}/notificationChannels/${var.notification_channel}" ]
+  notification_channels = [ var.notification_channel ]
 
   display_name          = "alerta-${var.client_project}-memory"
   enabled               = "true"
   project               = var.client_project
 }
+#"projects/${var.obm_project}/notificationChannels/${var.notification_channel}"

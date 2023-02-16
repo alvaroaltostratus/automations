@@ -3,6 +3,11 @@ variable "client_project" {
     description = "El proyecto (cliente) en el que vamos a trabajar."
 }
 
+variable "client_project_number" {
+    type        = string
+    description = "El numero de proyecto del cliente."
+}
+
 variable "obm_project" {
     type        = string
     default     = "monitorizacionobm"
