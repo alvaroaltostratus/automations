@@ -1,0 +1,16 @@
+id: linux-install-opsagent
+mode: ENFORCEMENT
+resourceGroups:
+  - resources:
+      id: install-opsagent
+      exec:
+        validate:
+          interpreter: SHELL
+          script: |
+            if systemctl is-active --quiet google-cloud-ops-agent; then exit 100; else echo exit 101; fi
+        enforce:
+          interpreter: SHELL
+          script: |
+            curl -sSO https://dl.google.com/cloudagents/add-google-cloud-ops-agent-repo.sh
+            sudo bash add-google-cloud-ops-agent-repo.sh --also-install
+            exit 100

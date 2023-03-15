@@ -1,0 +1,24 @@
+id: win-disable-firewall
+mode: ENFORCEMENT
+resourceGroups:
+  - resources:
+      id: disable-firewall
+      exec:
+        validate:
+          interpreter: POWERSHELL
+          script: |
+            $AllProfilesEnabled = $true
+            $Profiles = Get-NetFirewallProfile
+            foreach ($Profile in $Profiles) {
+                if ($Profile.Enabled -eq $false) {
+                    $AllProfilesEnabled = $false
+                    break
+                }
+            }
+
+            if ($AllProfilesEnabled) { exit 101 } else { exit 100 }
+        enforce:
+          interpreter: POWERSHELL
+          script: |
+            Set-NetFirewallProfile -Profile Domain, Public, Private -Enabled False
+            exit 100

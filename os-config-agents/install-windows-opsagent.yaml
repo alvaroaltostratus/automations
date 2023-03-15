@@ -1,0 +1,18 @@
+id: win-install-opsagent
+mode: ENFORCEMENT
+resourceGroups:
+  - resources:
+      id: install-opsagent
+      exec:
+        validate:
+          interpreter: POWERSHELL
+          script: |
+            $cloudops = Get-Service "google-cloud-ops*"
+
+            if ($cloudops) { exit 100 } else { exit 101 }
+        enforce:
+          interpreter: POWERSHELL
+          script: |
+            (New-Object Net.WebClient).DownloadFile("https://dl.google.com/cloudagents/add-google-cloud-ops-agent-repo.ps1", "${env:UserProfile}\add-google-cloud-ops-agent-repo.ps1")
+            Invoke-Expression "${env:UserProfile}\add-google-cloud-ops-agent-repo.ps1 -AlsoInstall"
+            exit 100

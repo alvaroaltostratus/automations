@@ -56,7 +56,6 @@ resource "google_pubsub_topic_iam_member" "pubsub_member" {
 module "alert_policies" {
     source                  = "./modules/alert-policies"
     client_project          = var.client_project
-    client_project_number   = var.client_project_number
     notification_channel    = google_monitoring_notification_channel.notification.id
 
     depends_on = [

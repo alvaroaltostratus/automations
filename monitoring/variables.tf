@@ -18,3 +18,8 @@ variable "topic_name" {
     type        = string
     description = "Nombre descriptivo del cliente en OBM."
 }
+
+variable "notification_channel" {
+    type        = string
+    description = "channel"
+}
