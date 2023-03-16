@@ -29,13 +29,5 @@ resource "google_os_config_patch_deployment" "patch_deployment" {
                 week_ordinal = 1
             }
         }
-
-        rollout {
-            mode = "ZONE_BY_ZONE"
-
-            disruption_budget {
-                fixed = 1
-            }
-        }
     }
 }
