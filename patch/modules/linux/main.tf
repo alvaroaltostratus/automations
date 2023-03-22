@@ -33,7 +33,7 @@ resource "google_os_config_patch_deployment" "linux_patch_deployment" {
 
     rollout {
         disruption_budget {
-            percentage = "25%"
+            percentage = "25"
         }
     }
 }
