@@ -102,3 +102,38 @@ resource "google_monitoring_alert_policy" "memory_policy" {
   enabled               = "true"
   project               = var.client_project
 }
+
+resource "google_monitoring_alert_policy" "swap_policy" {
+  alert_strategy {
+    auto_close = "604800s"
+  }
+
+  combiner = "OR"
+
+  conditions {
+    condition_threshold {
+      aggregations {
+        alignment_period   = "300s"
+        per_series_aligner = "ALIGN_MEAN"
+      }
+
+      comparison      = "COMPARISON_GT"
+      duration        = "0s"
+      filter          = "resource.type = \"gce_instance\" AND metric.type = \"agent.googleapis.com/swap/percent_used\" AND metric.labels.state = \"used\""
+      threshold_value = "90"
+
+      trigger {
+        count   = "1"
+        percent = "0"
+      }
+    }
+
+    display_name = "VM Instance - Memory utilization"
+  }
+
+  notification_channels = [ var.notification_channel ]
+
+  display_name          = "alerta-${var.client_project}-memory"
+  enabled               = "true"
+  project               = var.client_project
+}
