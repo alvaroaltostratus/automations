@@ -14,7 +14,12 @@ resource "google_compute_project_metadata" "project_metadata" {
     }
 }
 
-module "windows-patch" {
+module "windows_patch" {
     source  = "./modules/windows"
+    zones   = var.zones
+}
+
+module "linux_patch" {
+    source  = "./modules/linux"
     zones   = var.zones
 }

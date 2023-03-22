@@ -1,15 +1,15 @@
-resource "google_os_config_patch_deployment" "windows_patch_deployment" {
-    patch_deployment_id = "windows-patch-deployment"
+resource "google_os_config_patch_deployment" "linux_patch_deployment" {
+    patch_deployment_id = "linux-patch-deployment"
 
     instance_filter {
       zones = var.zones
     }
 
     patch_config {
-        reboot_config = "ALWAYS"
+        reboot_config = "DEFAULT"
 
-        windows_update {
-            classifications = ["CRITICAL", "SECURITY", "UPDATE"]
+        apt {
+            type = "UPGRADE"
         }
     }
     
