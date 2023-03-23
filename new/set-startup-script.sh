@@ -1,7 +1,7 @@
 #! /bin/bash
 
 if [ $# -lt 4 ]; then
-    echo "$0 <project> <zone> <script> <linux/windows> [<instances> ... ]"
+    echo "$0 <project> <zone> <script path> <linux/windows> [<instances> ... ]"
     exit 1
 fi
 

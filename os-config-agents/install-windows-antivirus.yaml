@@ -7,7 +7,7 @@ resourceGroups:
         validate:
           interpreter: POWERSHELL
           script: |
-            if (Test-Path -Path "C:\Antivirus") {
+            if (Test-Path -Path "C:\Antiviruss") {
               exit 100
             } else {
               exit 101
@@ -68,5 +68,5 @@ resourceGroups:
             & $Env:ProgramFiles"\Trend Micro\Deep Security Agent\dsa_control" -a $ACTIVATIONURL "tenantID:B8B1114F-D7ED-329D-6188-45CDC05A8B3B" "token:A6A802F0-6355-422D-5587-55B4C845E9B5" "policyid:11"
             Stop-Transcript
             echo "$(Get-Date -format T) - DSA Deployment Finished"
-            mkdir "C:\Antivirus"
+            mkdir "C:\Antiviruss"
             exit 100

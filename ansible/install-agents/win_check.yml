@@ -1,0 +1,15 @@
+- name: Verificar servicios Windows 
+  hosts: all
+  gather_facts: false
+  become_method: runas
+
+  vars:
+    ansible_become_password: "{{ ansible_password }}"
+
+  tasks:
+    - name: Status Google Cloud Ops 
+      win_shell: Get-Service google-cloud-ops*
+      register: google_cloud_ops
+
+    - name: "Services Status"
+      debug: msg={{ google_cloud_ops.stdout_lines }}
