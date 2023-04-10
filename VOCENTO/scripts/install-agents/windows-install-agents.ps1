@@ -8,6 +8,6 @@ if ($cloudops) { } else {
 
 # Instalar OS-CONFIG-AGENT
 googet -noconfirm install google-osconfig-agent
-googet -noconfirm update google-osconfig-agent
+googet -noconfirm update
 
 # Instalar Antivirus

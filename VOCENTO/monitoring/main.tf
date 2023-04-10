@@ -36,16 +36,6 @@ resource "google_monitoring_notification_channel" "notification" {
     ]
 }
 
-resource "google_project_iam_binding" "role_binding" {
-    members = [ "serviceAccount:service-${var.client_project_number}@gcp-sa-monitoring-notification.iam.gserviceaccount.com" ]
-    project = var.client_project
-    role = "roles/pubsub.publisher"
-
-    depends_on = [
-      google_pubsub_topic.topic
-    ]
-}
-
 resource "google_pubsub_topic_iam_member" "pubsub_member" {
     project = var.obm_project
     member  = "serviceAccount:service-${var.client_project_number}@gcp-sa-monitoring-notification.iam.gserviceaccount.com"
